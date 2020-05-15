@@ -1,3 +1,5 @@
+## Yew PWA Minimal
+
 This project contains a minimal [Progressive Web App (PWA)](https://en.wikipedia.org/wiki/Progressive_web_application) using [`Yew`](https://github.com/yewstack/yew). It is based on the [`yew-wasm-pack-minimal`](https://github.com/yewstack/yew-wasm-pack-minimal) example and James Johnson's [Simple PWA Tutorial](https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605). 
 
 Compared to [`yew-wasm-pack-minimal`](https://github.com/yewstack/yew-wasm-pack-minimal), the following changes were implemented:
