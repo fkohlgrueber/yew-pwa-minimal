@@ -1,31 +1,32 @@
-## About
+This project contains a minimal [Progressive Web App (PWA)](https://en.wikipedia.org/wiki/Progressive_web_application) using [`Yew`](https://github.com/yewstack/yew). It is based on the [`yew-wasm-pack-minimal`](https://github.com/yewstack/yew-wasm-pack-minimal) example and James Johnson's [Simple PWA Tutorial](https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605). 
 
-This template demonstrates the minimum code and tooling necessary for a frontend web app with simple deployable artifacts consisting of one HTML file, one JavaScript file, and one WebAssembly file, using [`Yew`](https://github.com/yewstack/yew), [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen), and [`wasm-pack`](https://github.com/rustwasm/wasm-pack).
+Compared to [`yew-wasm-pack-minimal`](https://github.com/yewstack/yew-wasm-pack-minimal), the following changes were implemented:
+- Add a manifest file (`manifest.json`) describing the PWA.
+- Add a service worker (`sw.js`) that allows the app to work offline.
+- Add an icon (`icon-256.png`).
+- Register the service worker and manifest file in `index.html`.
 
-Note: [`yew-wasm-pack-template`](https://github.com/yewstack/yew-wasm-pack-template) is the full-featured counterpart to this template, integrating many common web technologies.
+## Build
 
-## Usage
+Follow the instructions at https://github.com/yewstack/yew-wasm-pack-minimal to build and bundle the project. Basically:
+```
+wasm-pack build --target web
+rollup ./main.js --format iife --file ./pkg/bundle.js
+```
 
-### 1) Install `Rust` and `wasm-pack`
+## Test / Deploy
 
-Follow the instructions at https://www.rust-lang.org/tools/install and follow the `installation` link at [`wasm-pack`](https://github.com/rustwasm/wasm-pack).
+PWAs need to be accessed via https. If you don't have a https server set up already, the simplest way to test your PWA is to use Github Pages. Create a new project, activate Github Pages for the master branch and upload the following files to it:
 
-### 2) Build
+```
+pkg/bundle.js
+pkg/yew_wasm_pack_minimal_bg.wasm
+icon-256.png
+index.html
+manifest.json
+sw.js
+```
 
-Enter `wasm-pack build --target web` from your project's root directory.
+The website should become available under https://USERNAME.github.io/PROJECT_NAME after a couple of minutes. I've uploaded the deployment files to https://github.com/fkohlgrueber/yew-pwa-deploy. The PWA is available under https://fkohlgrueber.github.io/yew-pwa-deploy/.
 
-### 3) [temporary] Bundle
-
-Enter `rollup ./main.js --format iife --file ./pkg/bundle.js` from your project's root directory.
-
-Note: Until `wasm-pack` [RFC #6](https://github.com/rustwasm/rfcs/blob/master/text/006-local-js-dependencies.md) is implemented there is no available option to [generate a single amalgamated JavaScript file](https://github.com/rustwasm/wasm-pack/issues/699).  In the interim a bundler, such as [`Rollup`](https://rollupjs.org/guide/en/#quick-start), must be used.
-
-### 4) [optional] Test Run
-
-Run a webserver from your project's root directory, such as with the Python 3 command: `python -m http.server 8080`, and load http://localhost:8080/ in a browser to run the app.
-
-Note: It's expected behavior for the browser console to display an error similar to "WebAssembly.instantiateStreaming failed. Assuming this is because your server does not serve wasm with application/wasm MIME type."  Your production webserver should be configured to associate WebAssembly files with the `application/wasm` MIME type.
-
-### 5) Deploy
-
-Access your generated build artifacts, `bundle.js` and `yew_wasm_pack_minimal_bg.wasm`, in ./pkg from your project's root directory.
+Feel free to open issues if things don't work for you.
